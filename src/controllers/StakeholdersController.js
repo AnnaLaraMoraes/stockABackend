@@ -1,4 +1,5 @@
 import * as yup from 'yup';
+import Mongoose from 'mongoose';
 import Stakeholders from '../models/Stakeholders';
 
 class StakeholdersController {
@@ -66,9 +67,9 @@ class StakeholdersController {
       let stakeholders;
 
       if (type) {
-        stakeholders = await Stakeholders.find({ type, isActive: true });
+        stakeholders = await Stakeholders.find({ type });
       } else {
-        stakeholders = await Stakeholders.find({ isActive: true });
+        stakeholders = await Stakeholders.find({});
       }
       return res.status(201).json({
         message: 'pessoas encontradas com sucesso!',
@@ -78,6 +79,18 @@ class StakeholdersController {
       return res.status(422).json({ message: 'Erro ao buscar pessoas!' });
     }
   }
+
+  // async destroy(req, res, next) {
+  //   const { id } = req.params;
+
+  //   try {
+  //     await Stakeholders.deleteOne({ _id: Mongoose.Types.ObjectId(id) });
+
+  //     return res.status(201).json({ message: 'Pessoa excluído com sucesso!' });
+  //   } catch (error) {
+  //     return res.status(422).json({ message: 'Erro ao excluir pessoa!' });
+  //   }
+  // }
 }
 
 export default new StakeholdersController();

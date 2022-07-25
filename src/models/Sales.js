@@ -52,12 +52,8 @@ const SalesSchema = new Mongoose.Schema(
       required: true,
       ref: 'Users',
     },
-    // financeId: {
-    //   type: Mongoose.Schema.Types.ObjectId,
-    //   required: false,
-    //   ref: 'Finances',
-    // },
     isActive: { type: Boolean, required: true, default: true },
+    totalValue: { type: String, required: true },
   },
   { timestamps: true }
 );

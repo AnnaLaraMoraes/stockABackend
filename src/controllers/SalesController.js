@@ -36,6 +36,7 @@ class SalesController {
         .test('is-user', 'Usuário não encontrado.', async (id) =>
           Users.findById(id)
         ),
+      totalValue: yup.string().required('Este campo é obrigatório'),
     });
     try {
       const { products } = req.body;
@@ -49,7 +50,7 @@ class SalesController {
       await newSale.save();
 
       products.map(async (product) => {
-        await Products.update(
+        await Products.updateOne(
           { _id: Mongoose.Types.ObjectId(product.product) },
           { $inc: { amountStock: Number(product.amount) * -1 } }
         );
@@ -83,14 +84,14 @@ class SalesController {
         const newStock =
           Number(product.amountStock) + Number(lastValue) - Number(newValue);
 
-        await Products.update(
+        await Products.updateOne(
           { _id: Mongoose.Types.ObjectId(idProduct) },
           { amountStock: newStock }
         );
       };
 
       const addNewProductToSale = async (idProduct, newAmount) => {
-        await Products.update(
+        await Products.updateOne(
           { _id: Mongoose.Types.ObjectId(idProduct) },
           { $inc: { amountStock: Number(newAmount) * -1 } }
         );
@@ -110,7 +111,7 @@ class SalesController {
         const newStock =
           Number(product.amountStock) + Number(amountToReturnToStock);
 
-        await Products.update(
+        await Products.updateOne(
           { _id: Mongoose.Types.ObjectId(idProduct) },
           { amountStock: newStock }
         );
@@ -153,7 +154,17 @@ class SalesController {
   async index(req, res) {
     try {
       // const { userId } = req.query;
-      const sales = await Sales.find().populate('client').populate('products');
+      const sales = await Sales.find()
+        .populate('client')
+        .populate({
+          path: 'products',
+          populate: {
+            path: 'product',
+            populate: {
+              path: 'category',
+            },
+          },
+        });
       return res
         .status(201)
         .json({ message: 'Vendas encontrados com sucesso!', sales });
@@ -174,9 +185,9 @@ class SalesController {
         res.status(422).json({ message: 'Erro ao editar produto!' });
       }
       const newStock =
-        Number(product.amountStock) + Number(amountToReturnToStock);
+        Number(product.amountStock || 0) + Number(amountToReturnToStock);
 
-      await Products.update(
+      await Products.updateOne(
         { _id: Mongoose.Types.ObjectId(idProduct) },
         { amountStock: newStock }
       );
