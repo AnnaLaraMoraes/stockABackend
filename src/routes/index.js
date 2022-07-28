@@ -5,6 +5,7 @@ import CategoriesController from '../controllers/CategoriesController';
 import StakeholdersController from '../controllers/StakeholdersController';
 import ProductsController from '../controllers/ProductsController';
 import SalesController from '../controllers/SalesController';
+import ReportsController from '../controllers/ReportsController';
 
 const routes = new Router();
 
@@ -36,5 +37,8 @@ routes.delete('/sales/:id', SalesController.destroy);
 
 // Sales Payments
 routes.put('/sales-payments/:id', SalesController.updatePayment);
+
+// Reports
+routes.get('/reports', ReportsController.index);
 
 export default routes;
