@@ -54,6 +54,18 @@ const SalesSchema = new Mongoose.Schema(
     },
     isActive: { type: Boolean, required: true, default: true },
     totalValue: { type: String, required: true },
+    received: [
+      {
+        value: {
+          type: Number,
+          required: true,
+        },
+        date: {
+          type: Date,
+          required: true,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

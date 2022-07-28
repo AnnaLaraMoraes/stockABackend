@@ -34,4 +34,7 @@ routes.get('/sales', SalesController.index);
 routes.put('/sales/:id', SalesController.update);
 routes.delete('/sales/:id', SalesController.destroy);
 
+// Sales Payments
+routes.put('/sales-payments/:id', SalesController.updatePayment);
+
 export default routes;

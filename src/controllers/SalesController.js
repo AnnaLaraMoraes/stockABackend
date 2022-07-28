@@ -211,6 +211,24 @@ class SalesController {
       return res.status(422).json({ message: 'Erro ao excluir venda!' });
     }
   }
+
+  async updatePayment(req, res, next) {
+    const { id } = req.params;
+    const { received } = req.body;
+    try {
+      const sale = await Sales.findOne({
+        _id: Mongoose.Types.ObjectId(id),
+      });
+
+      await sale.updateOne({ $push: { received } });
+
+      return res
+        .status(201)
+        .json({ message: 'Pagamento adicionado com sucesso!' });
+    } catch (error) {
+      return res.status(422).json({ message: 'Erro ao adicionar pagamento!' });
+    }
+  }
 }
 
 export default new SalesController();
