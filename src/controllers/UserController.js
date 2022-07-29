@@ -5,6 +5,7 @@ import { validateCnpj, validateCpf } from '../utils/validators';
 
 class UserController {
   async store(req, res) {
+    console.log('teste');
     const userSchema = yup.object({
       email: yup
         .string()
