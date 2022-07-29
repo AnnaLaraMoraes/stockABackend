@@ -35,6 +35,7 @@ const ProductsSchema = new Mongoose.Schema(
     provider: {
       type: Mongoose.Schema.Types.ObjectId,
       ref: 'Stakeholders',
+      required: false,
     },
     userId: {
       type: Mongoose.Schema.Types.ObjectId,

@@ -5,14 +5,14 @@ const StakeholdersSchema = new Mongoose.Schema(
   {
     isActive: { type: Boolean, required: true, default: true },
     name: { type: String, required: true },
-    phone: { type: String, required: true },
+    phone: { type: String },
     address: {
       state: { type: String, required: false },
       city: { type: String, required: false },
       address: { type: String, required: false },
       cep: { type: String, required: false },
     },
-    isLegalPerson: { type: Boolean, required: true },
+    isLegalPerson: { type: Boolean },
     cpf: { type: String, required: false },
     cnpj: { type: String, required: false },
     email: { type: String, required: false },

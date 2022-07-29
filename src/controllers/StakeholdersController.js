@@ -6,8 +6,8 @@ class StakeholdersController {
   async store(req, res) {
     const stakeholderSchema = yup.object({
       name: yup.string().required('Este campo é obrigatório'),
-      phone: yup.string().required('Este campo é obrigatório'),
-      isLegalPerson: yup.string().required('Este campo é obrigatório'),
+      phone: yup.string(),
+      isLegalPerson: yup.string(),
       cpf: yup.string(),
       cnpj: yup.string(),
       email: yup.string(),

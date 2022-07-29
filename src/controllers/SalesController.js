@@ -6,6 +6,7 @@ import Products from '../models/Products';
 
 class SalesController {
   async store(req, res) {
+    console.log('entrou aqui em cadastrar');
     const saleSchema = yup.object({
       paymentType: yup
         .string()
@@ -59,6 +60,7 @@ class SalesController {
 
       return res.status(201).json({ message: 'Venda cadastrado com sucesso!' });
     } catch (error) {
+      console.log(error);
       return res.status(422).json({ message: 'Erro ao cadastrar venda' });
     }
   }
