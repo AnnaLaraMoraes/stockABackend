@@ -33,7 +33,7 @@ class SalesController {
         .required('Este campo é obrigatório'),
       userId: yup
         .string()
-        .required('Este campo é obrigatório')
+        .required('Este campo é obrigtório')
         .test('is-user', 'Usuário não encontrado.', async (id) =>
           Users.findById(id)
         ),
