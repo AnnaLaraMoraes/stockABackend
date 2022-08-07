@@ -47,10 +47,9 @@ const SalesSchema = new Mongoose.Schema(
         },
       },
     ],
-    userId: {
-      type: Mongoose.Schema.Types.ObjectId,
+    firebaseUserUid: {
+      type: String,
       required: true,
-      ref: 'Users',
     },
     isActive: { type: Boolean, required: true, default: true },
     totalValue: { type: String, required: true },

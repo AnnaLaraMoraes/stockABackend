@@ -1,8 +1,8 @@
-// import 'dotenv/config.js';
+import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import 'express-async-errors';
-
+import middleware from '../middleware/index';
 import routes from './routes';
 
 import './database';
@@ -12,6 +12,7 @@ class App {
     this.server = express();
 
     this.middlewares();
+
     this.routes();
   }
 
@@ -21,6 +22,7 @@ class App {
   middlewares() {
     this.server.use(cors());
     this.server.use(express.json());
+    this.server.use(middleware.decodeToken);
   }
 
   /**

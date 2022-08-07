@@ -1,12 +1,10 @@
 import * as yup from 'yup';
 import Mongoose from 'mongoose';
 import Sales from '../models/Sales';
-import Users from '../models/Users';
 import Products from '../models/Products';
 
 class SalesController {
   async store(req, res) {
-    console.log('entrou aqui em cadastrar');
     const saleSchema = yup.object({
       paymentType: yup
         .string()
@@ -31,16 +29,12 @@ class SalesController {
           })
         )
         .required('Este campo é obrigatório'),
-      userId: yup
-        .string()
-        .required('Este campo é obrigtório')
-        .test('is-user', 'Usuário não encontrado.', async (id) =>
-          Users.findById(id)
-        ),
+      firebaseUserUid: yup.string().required('Este campo é obrigtório'),
       totalValue: yup.string().required('Este campo é obrigatório'),
     });
     try {
       const { products } = req.body;
+      req.body.firebaseUserUid = req.headers.firebaseuid;
 
       const saleValidated = await saleSchema.validate(req.body, {
         abortEarly: true,
@@ -155,8 +149,11 @@ class SalesController {
 
   async index(req, res) {
     try {
-      // const { userId } = req.query;
-      const sales = await Sales.find()
+      const { firebaseuid } = req.headers;
+
+      const sales = await Sales.find({
+        firebaseUserUid: { $eq: firebaseuid },
+      })
         .populate('client')
         .populate({
           path: 'products',

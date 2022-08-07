@@ -5,23 +5,20 @@ const UsersSchema = new Mongoose.Schema(
   {
     email: { type: String, unique: true, required: true },
     isActive: { type: Boolean, required: true, default: true },
-    isVerified: { type: Boolean, required: true, default: true },
-    isLegalPerson: { type: Boolean, required: true },
-    name: { type: String, required: true },
+    isLegalPerson: { type: Boolean },
+    name: { type: String },
     cpf: { type: String, required: false },
     cnpj: { type: String, required: false },
-    storeName: { type: String, required: true },
+    storeName: { type: String },
     merchantType: {
       type: String,
       enum: ['autonomous', 'wholesaler', 'retailer'],
-      required: true,
     },
-    password: { type: String, required: true },
-    phone: { type: String, required: true },
+    phone: { type: String },
     address: {
-      state: { type: String, required: true },
-      city: { type: String, required: true },
-      address: { type: String, required: true },
+      state: { type: String },
+      city: { type: String },
+      address: { type: String },
     },
     role: {
       type: String,
@@ -34,6 +31,10 @@ const UsersSchema = new Mongoose.Schema(
       enum: ['debit', 'paid'],
       required: true,
       default: 'debit',
+    },
+    firebaseUid: {
+      type: String,
+      required: true,
     },
   },
   { timestamps: true }

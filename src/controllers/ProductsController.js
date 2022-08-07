@@ -2,8 +2,6 @@ import * as yup from 'yup';
 import Mongoose from 'mongoose';
 import Product from '../models/Products';
 import Categories from '../models/Categories';
-// import Stakeholders from '../models/Stakeholders';
-import Users from '../models/Users';
 
 class ProductsController {
   async store(req, res) {
@@ -51,18 +49,15 @@ class ProductsController {
           (value) => value === 'wholesale' || value === 'retail'
         )
         .required('Este campo é obrigatório'),
-      userId: yup
-        .string()
-        .required('Este campo é obrigatório')
-        .test('is-user', 'Usuário não encontrado.', async (id) =>
-          Users.findById(id)
-        ),
+      firebaseUserUid: yup.string().required('Este campo é obrigatório'),
     });
 
     try {
+      req.body.firebaseUserUid = req.headers.firebaseuid;
       const productValidated = await productSchema.validate(req.body, {
         abortEarly: true,
       });
+      console.log(productValidated);
 
       const newproduct = new Product(productValidated);
       await newproduct.save();
@@ -107,27 +102,11 @@ class ProductsController {
 
   async index(req, res) {
     try {
-      // const { userId } = req.query;
+      const { firebaseuid } = req.headers;
 
-      // const aggregatePipe = [
-      //   {
-      //     $lookup: {
-      //       from: 'sales',
-      //       localField: 'products',
-      //       foreignField: '_id',
-      //       as: 'productsSale',
-      //     },
-      //   },
-      //   {
-      //     $unwind: '$productsSale',
-      //   },
-      // ];
-
-      // const products = await Product.aggregate(aggregatePipe);
-      // // .populate('provider')
-      // // .populate('category');
-
-      const products = await Product.find()
+      const products = await Product.find({
+        firebaseUserUid: { $eq: firebaseuid },
+      })
         .populate('provider')
         .populate('category');
 

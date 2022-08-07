@@ -23,10 +23,9 @@ const StakeholdersSchema = new Mongoose.Schema(
       enum: ['provider', 'employee', 'client'],
       required: true,
     },
-    userId: {
-      type: Mongoose.Schema.Types.ObjectId,
+    firebaseUserUid: {
+      type: String,
       required: true,
-      ref: 'Users',
     },
   },
   { timestamps: true }

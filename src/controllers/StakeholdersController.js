@@ -1,5 +1,4 @@
 import * as yup from 'yup';
-import Mongoose from 'mongoose';
 import Stakeholders from '../models/Stakeholders';
 
 class StakeholdersController {
@@ -20,12 +19,14 @@ class StakeholdersController {
         address: yup.string(),
         cep: yup.string(),
       }),
-      userId: yup.string().required('Este campo é obrigatório'),
+      firebaseUserUid: yup.string().required('Este campo é obrigatório'),
     });
 
     let stakeholderValidated;
 
     try {
+      req.body.firebaseUserUid = req.headers.firebaseuid;
+
       stakeholderValidated = await stakeholderSchema.validate(req.body, {
         abortEarly: true,
       });
@@ -38,6 +39,7 @@ class StakeholdersController {
         .status(201)
         .json({ message: 'Pessoa cadastrado com sucesso!' });
     } catch (error) {
+      console.log(error);
       return res.status(422).json({ message: 'Erro ao cadastrar pessoa!' });
     }
   }
@@ -66,10 +68,17 @@ class StakeholdersController {
 
       let stakeholders;
 
+      const { firebaseuid } = req.headers;
+
       if (type) {
-        stakeholders = await Stakeholders.find({ type });
+        stakeholders = await Stakeholders.find({
+          type: { $eq: type },
+          firebaseUserUid: { $eq: firebaseuid },
+        });
       } else {
-        stakeholders = await Stakeholders.find({});
+        stakeholders = await Stakeholders.find({
+          firebaseUserUid: { $eq: firebaseuid },
+        });
       }
       return res.status(201).json({
         message: 'pessoas encontradas com sucesso!',

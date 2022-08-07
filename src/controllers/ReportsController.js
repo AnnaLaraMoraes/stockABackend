@@ -4,7 +4,11 @@ import Sales from '../models/Sales';
 class ReportsController {
   async index(req, res) {
     try {
-      const sales = await Sales.find()
+      const { firebaseuid } = req.headers;
+
+      const sales = await Sales.find({
+        firebaseUserUid: { $eq: firebaseuid },
+      })
         .populate('client')
         .populate({
           path: 'products',

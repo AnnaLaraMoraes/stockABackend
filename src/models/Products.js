@@ -37,10 +37,9 @@ const ProductsSchema = new Mongoose.Schema(
       ref: 'Stakeholders',
       required: false,
     },
-    userId: {
-      type: Mongoose.Schema.Types.ObjectId,
+    firebaseUserUid: {
+      type: String,
       required: true,
-      ref: 'Users',
     },
     date: {
       type: Date,
