@@ -2,7 +2,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import express from 'express';
 import 'express-async-errors';
-import middleware from '../middleware/index';
+import middleware from './middleware/index';
 import routes from './routes';
 
 import './database';
