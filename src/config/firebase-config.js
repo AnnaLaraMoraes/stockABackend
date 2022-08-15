@@ -13,6 +13,8 @@ const serviceAccount = {
   client_x509_cert_url: process.env.CLIENTX509CERTURL,
 };
 
+console.log('serviceAccount', serviceAccount);
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
