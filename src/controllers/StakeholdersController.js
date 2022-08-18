@@ -39,7 +39,6 @@ class StakeholdersController {
         .status(201)
         .json({ message: 'Pessoa cadastrado com sucesso!' });
     } catch (error) {
-      console.log(error);
       return res.status(422).json({ message: 'Erro ao cadastrar pessoa!' });
     }
   }

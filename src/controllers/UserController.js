@@ -45,7 +45,6 @@ class UserController {
         .status(201)
         .json({ message: 'Usuário cadastrado com sucesso!' });
     } catch (error) {
-      console.log(error);
       return res.status(422).json({ message: 'Erro ao cadastrar usuário!' });
     }
   }

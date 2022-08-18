@@ -12,7 +12,7 @@ const UsersSchema = new Mongoose.Schema(
     storeName: { type: String },
     merchantType: {
       type: String,
-      enum: ['autonomous', 'wholesaler', 'retailer'],
+      enum: ['autonomous', 'wholesaler', 'retailer', 'retailer-wholesaler'],
     },
     phone: { type: String },
     address: {
