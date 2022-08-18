@@ -83,6 +83,7 @@ class ProductsController {
 
       return res.status(201).json({ message: 'Produto editado com sucesso!' });
     } catch (error) {
+      console.log('Erro ao editar produto', error);
       return res.status(422).json({ message: 'Erro ao editar produto!' });
     }
   }
