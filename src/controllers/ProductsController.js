@@ -93,7 +93,7 @@ class ProductsController {
     try {
       await Product.deleteOne({ _id: Mongoose.Types.ObjectId(id) });
 
-      return res.status(201).json({ message: 'Produto exclído com sucesso!' });
+      return res.status(201).json({ message: 'Produto excluído com sucesso!' });
     } catch (error) {
       return res.status(422).json({ message: 'Erro ao excluir produto!' });
     }
