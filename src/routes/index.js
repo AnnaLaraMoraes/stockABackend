@@ -17,6 +17,7 @@ routes.post('/user', UserController.store);
 
 // Categories
 routes.get('/categories', CategoriesController.show);
+routes.post('/categories', CategoriesController.store);
 
 // Person
 routes.get('/stakeholders', StakeholdersController.index);

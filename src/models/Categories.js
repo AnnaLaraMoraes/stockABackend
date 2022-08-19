@@ -6,15 +6,21 @@ const CategoriesSchema = new Mongoose.Schema(
     code: {
       type: Number,
       min: 1,
-      required: true,
-      unique: true,
     },
     name: { type: String, required: true },
     label: { type: String, required: true },
     productType: {
       type: String,
-      enum: ['clothes', 'shoes', 'accessories'],
+      enum: ['clothes', 'shoes', 'accessories', 'others'],
       required: true,
+    },
+    firebaseUserUid: {
+      type: String,
+    },
+    public: {
+      type: Boolean,
+      required: true,
+      default: false,
     },
   },
   { timestamps: true }

@@ -14,18 +14,7 @@ class ProductsController {
         .test('is-category', 'Categoria não encontrado.', async (id) =>
           Categories.findById(id)
         ),
-      subcategory: yup
-        .string()
-        .test(
-          'is-valid',
-          'is not valid',
-          (value) =>
-            value === 'female' ||
-            value === 'male' ||
-            value === 'boy' ||
-            value === 'girl'
-        )
-        .required('Este campo é obrigatório'),
+      subcategory: yup.string(),
       amountStock: yup.string().required('Este campo é obrigatório'),
       size: yup.string(),
       costValue: yup.string().required('Este campo é obrigatório'),
@@ -36,7 +25,10 @@ class ProductsController {
           'is-valid',
           'is not valid',
           (value) =>
-            value === 'clothes' || value === 'shoes' || value === 'accessories'
+            value === 'clothes' ||
+            value === 'shoes' ||
+            value === 'accessories' ||
+            value === 'others'
         )
         .required('Este campo é obrigatório'),
       provider: yup.string(),
@@ -65,6 +57,7 @@ class ProductsController {
         .status(201)
         .json({ message: 'Produto cadastrado com sucesso!' });
     } catch (error) {
+      console.log(error);
       return res.status(422).json({ message: 'Erro ao cadastrar Produto ' });
     }
   }

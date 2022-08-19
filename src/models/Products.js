@@ -20,11 +20,11 @@ const ProductsSchema = new Mongoose.Schema(
     subcategory: {
       type: String,
       enum: ['female', 'male', 'boy', 'girl'],
-      required: true,
+      required: false,
     },
     productType: {
       type: String,
-      enum: ['clothes', 'shoes', 'accessories'],
+      enum: ['clothes', 'shoes', 'accessories', 'others'],
       required: true,
     },
     productStockType: {
